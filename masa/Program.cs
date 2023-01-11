@@ -11,7 +11,7 @@ public class Program
     public async Task MainAsync(string[] args) { 
         _client = new DiscordSocketClient();
         _client.Log += Log;
-        _token = args[0];
+        _token = args[0] ?? throw new NullReferenceException("Sinulla pitää olla bot-token!");
         
         await _client.LoginAsync(TokenType.Bot, _token);
         await _client.StartAsync();
