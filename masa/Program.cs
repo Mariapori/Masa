@@ -34,24 +34,29 @@ public class Program
     private async Task _client_Ready()
     {
         await SetInterval(() => LaitaKissakuva(), TimeSpan.FromHours(12), true);
-        
-        var guild = _client?.GetGuild(252154029868711937);
-        
-        if (guild != null)
+
+        await Task.Run(async () =>
         {
-            var infoCmd = new SlashCommandBuilder();
-            infoCmd.WithName("info");
-            infoCmd.WithDescription("Tällä komennolla saat tietoja Masasta ja sen kehittäjistä.");
+            var guild = _client?.GetGuild(252154029868711937);
 
-            try
+            if (guild != null)
             {
-                await guild.CreateApplicationCommandAsync(infoCmd.Build());
+                var infoCmd = new SlashCommandBuilder();
+                infoCmd.WithName("info");
+                infoCmd.WithDescription("Tällä komennolla saat tietoja Masasta ja sen kehittäjistä.");
 
-            }catch(Exception ex) 
-            {
-                Console.WriteLine(ex.ToString());
+                try
+                {
+                    await guild.CreateApplicationCommandAsync(infoCmd.Build());
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
             }
-        }
+        });
+
     }
 
     private Task Log(LogMessage msg)
